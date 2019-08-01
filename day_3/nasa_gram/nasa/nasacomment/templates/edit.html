@@ -1,0 +1,17 @@
+<form action="" method="post" class="form-example">
+  <img src = '{{ comments.image }}'/>
+    {% csrf_token %}
+  <div class="form-example">
+    <input type = "hidden" name = "image_url" value = "{{comments.image}}"/>
+    <label for="comment">Enter your comment: </label>
+    <input type="text" name="comment" id="name" placeholder='{{comments.comment}}' required>
+  </div>
+  <div class="form-example">
+    <label for="rating">Your rating of the picture 0-5:</label>
+    <input type="number" id="rating" name="rating" placeholder='{{comments.rating}}'
+             min="0" max="5"/>
+  </div>
+  <div class="form-example">
+    <input type="submit" value="Submit">
+  </div>
+</form>

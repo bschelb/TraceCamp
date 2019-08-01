@@ -1,0 +1,7 @@
+{% for url in urls %}
+<div>
+    <a href = "/create?picture_url={{ url }}">
+        <img src="{{ url }}">
+    </a>
+</div>
+{% endfor %}
