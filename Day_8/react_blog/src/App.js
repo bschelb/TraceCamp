@@ -5,12 +5,13 @@ import './components/Form';
 import Form from './components/Form';
 import { BlogProvider } from "./components/blog_context";
 import BlogList from "./components/blog_list";
+import Pages from "./components/Pages";
 
 function App() {
   return (
     <BlogProvider>
     <div className="App">
-     <BlogList />
+     <Pages />
     </div>
     </BlogProvider>
   );

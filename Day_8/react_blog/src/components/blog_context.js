@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 
-const BlogContext = React.createContext([{}, () => {}]);
+export const BlogContext = React.createContext([{}, () => {}]);
 
-const BlogProvider = (props) => {
-    const [ list, setList ] = useState({
-        posts: [
+export const BlogProvider = (props) => {
+    const [ list, setList ] = useState([
           {
-            title: 'test', body: 'test2',
+            title: 'title1', body: 'body1',
           },
           {
-            title: 'test', body: 'test2',
+            title: 'title2', body: 'body2',
           },
           {
-            title: 'test', body: 'test2',
+            title: 'title3', body: 'body3',
           },
-        ],
-      });
+        ]);
     return(
         <BlogContext.Provider value={[ list, setList ]}>
             { props.children }
         </BlogContext.Provider>
     );
 };
-
-export default BlogProvider;

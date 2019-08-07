@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import BlogContext from "./components/blog_context";
+import { BlogContext } from "./components/blog_context";
 
 const BlogList = () => {
   const [ list, setList ] = useContext(BlogContext);
