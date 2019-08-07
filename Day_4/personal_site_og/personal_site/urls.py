@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home', TemplateView.as_view(template_name='home.html')),
+    path('home/', TemplateView.as_view(template_name='home.html')),
     path('blog/', include('blog.urls')),
-    path('', RedirectView.as_view(url='home')),
+    path('', RedirectView.as_view(url='home/')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

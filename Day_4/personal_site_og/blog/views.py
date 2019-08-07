@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 class PostCreate(CreateView):
     model = Post
     fields = ['title', 'body']
-    success_url = '/blog/list'
+    success_url = '/blog/list/'
 
 class PostList(ListView):
     model = Post
