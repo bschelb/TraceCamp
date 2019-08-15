@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import 'bootstrap/dist/css/bootstrap.css';
-import { TodosProvider } from "./components/ListContext";
-import { UserProvider } from "./components/UserContext";
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import { UserProvider } from 'contexts/UserContext/UserContext';
+import { TodosProvider } from 'contexts/TodosContext/TodosContext';
+import App from 'components/App/App';
 
 const root = (
-    <UserProvider>
-        <TodosProvider>
-             <App />
-        </TodosProvider>
-    </UserProvider>
-)
+	<Router>
+		<UserProvider>
+			<TodosProvider>
+				<App />
+			</TodosProvider>
+		</UserProvider>
+	</Router>
+);
 ReactDOM.render(root, document.getElementById('root'));

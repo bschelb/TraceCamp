@@ -12,11 +12,3 @@ class ToDoList(models.Model):
 class ToDoListItems(models.Model):
     todo_list = models.ForeignKey(ToDoList, related_name='items', on_delete=models.CASCADE)
     todo_task = models.TextField()
-
-
-# class ToDo(models.Model):
-#     listitemcontent = models.TextField()
-#     listtaskuserid = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    # def __str__(self):
-    #     return self.listitemcontnet
