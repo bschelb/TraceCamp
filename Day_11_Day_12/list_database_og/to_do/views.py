@@ -24,8 +24,11 @@ class ViewListOfLists(generics.ListAPIView):
 
 def delete_list(request, pk):
     list_data = get_object_or_404(ToDoList, id=pk)
+    # serializer = ToDoListSerializerAll(list_data)
+    # deleted_id = serializer.data['id']
+    # deleted_list = JsonResponse(serializer.data, safe=False)
     list_data.delete()
-    return HttpResponse("Deleted")
+    return HttpResponse('Deleted')
 
 
 class ViewToDos(generics.ListCreateAPIView):

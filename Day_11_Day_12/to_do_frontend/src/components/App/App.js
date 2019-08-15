@@ -11,7 +11,7 @@ const App = () => {
 			<Route path="/" component={TodosPage} />
 			<button
 				onClick={() => {
-					todosContext.addTodoList('react_list-2');
+					todosContext.removeTodoList(20);
 				}}
 			>
 				TEST

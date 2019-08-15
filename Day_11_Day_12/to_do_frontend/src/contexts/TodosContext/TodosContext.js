@@ -69,12 +69,18 @@ export const TodosProvider = (props) => {
 				});
 		},
 
-		removeTodoList: (id) => {
-			axios
-				.post(`http://127.0.0.1:8000/delete/${id}`, {
-					id,
-				})
-				.then((response) => {});
+		removeTodoList: (todoListId) => {
+			axios.get(`http://127.0.0.1:8000/delete/${todoListId}/`, {
+				id: todoListId,
+			});
+			todoListsActions.filter((todoList) => todoList.id !== todoListId);
+			// const todoListDeleted = todoLists.find(
+			// 	(todoList) => todoList.id === todoListId,
+			// );
+			// const todoListIndex = todoLists.findIndex(
+			// 	(todoList) => todoList.id === todoListId,
+			// );
+			// todoListsActions.delete(todoListIndex);
 		},
 
 		removeTodo: () => {},
