@@ -9,5 +9,4 @@ urlpatterns = [
     path('view_todos/', views.ViewToDos.as_view()),
     path('single_todo/<int:pk>/', views.SingleToDo.as_view()),
     path('single_todo/', views.CreateSingleTodo.as_view()),
-    path('blank_list/', views.CreateSingleList.as_view()),
 ]

@@ -10,7 +10,7 @@ export const TodosProvider = (props) => {
 	const [ todoLists, todoListsActions ] = useArray();
 	React.useEffect(
 		() => {
-			axios.get('http://127.0.0.1:8000/list/').then((response) => {
+			axios.get('http://198.21.222.157:8000/list/').then((response) => {
 				todoListsActions.set(response.data);
 			});
 		},
@@ -20,9 +20,11 @@ export const TodosProvider = (props) => {
 	const [ todoItems, todoItemsActions ] = useArray();
 	React.useEffect(
 		() => {
-			axios.get('http://127.0.0.1:8000/view_todos/').then((response) => {
-				todoItemsActions.set(response.data);
-			});
+			axios
+				.get('http://198.21.222.157:8000/view_todos/')
+				.then((response) => {
+					todoItemsActions.set(response.data);
+				});
 		},
 		[ todoItemsActions ],
 	);
@@ -33,7 +35,7 @@ export const TodosProvider = (props) => {
 
 		addTodoList: (todoListName) => {
 			axios
-				.post('http://127.0.0.1:8000/create/', {
+				.post('http://198.21.222.157:8000/create/', {
 					list_name: todoListName,
 					items: [],
 					listuserid: 1,
@@ -46,7 +48,7 @@ export const TodosProvider = (props) => {
 
 		addTodo: (todoListId, todoTask) => {
 			axios
-				.post('http://127.0.0.1:8000/single_todo/', {
+				.post('http://198.21.222.157:8000/single_todo/', {
 					todo_task: todoTask,
 					todo_list: todoListId,
 				})
@@ -70,31 +72,97 @@ export const TodosProvider = (props) => {
 		},
 
 		removeTodoList: (todoListId) => {
-			axios.get(`http://127.0.0.1:8000/delete/${todoListId}/`, {
+			axios.get(`http://198.21.222.157:8000/delete/${todoListId}/`, {
 				id: todoListId,
 			});
 			todoListsActions.filter((todoList) => todoList.id !== todoListId);
-			// const todoListDeleted = todoLists.find(
-			// 	(todoList) => todoList.id === todoListId,
-			// );
-			// const todoListIndex = todoLists.findIndex(
-			// 	(todoList) => todoList.id === todoListId,
-			// );
-			// todoListsActions.delete(todoListIndex);
 		},
 
-		removeTodo: () => {},
+		removeTodo: (todoTaskId, todoListId) => {
+			axios.delete(
+				`http://198.21.222.157:8000/single_todo/${todoTaskId}/`,
+				{
+					id: todoTaskId,
+					todo_list: todoListId,
+				},
+			);
+			const todoIndex = todoItems.findIndex(
+				(todoItems) => todoItems.id === todoTaskId,
+			);
+			const todolist = todoLists.find(
+				(todoList) => todoList.id === todoListId,
+			);
+			const todoListIndex = todoLists.findIndex(
+				(todoList) => todoList.id === todoListId,
+			);
+			const newTodos = todoItems.filter(
+				(todoItems) =>
+					todoItems.todo_list === todoListId &&
+					todoItems.id !== todoTaskId,
+			);
+			todoListsActions.replace(todoListIndex, {
+				...todolist,
+				items: newTodos,
+			});
+			todoItemsActions.remove(todoIndex);
+		},
 
-		editTodo: () => {},
+		editTodo: (updatedContent, todoTaskId, todoListId) => {
+			axios
+				.put(`http://198.21.222.157:8000/single_todo/${todoTaskId}/`, {
+					todo_task: updatedContent,
+					id: todoTaskId,
+					todo_list: todoListId,
+				})
+				.then((response) => {
+					//todoItems
+					const updatedTodo = response.data;
+					const todoIndex = todoItems.findIndex(
+						(todoItems) => todoItems.id === todoTaskId,
+					);
+					todoItemsActions.replace(todoIndex, updatedTodo);
+					//todoLists
+					const todoListIndex = todoLists.findIndex(
+						(todoList) => todoList.id === todoListId,
+					);
+					console.log(todoListIndex);
+					const todolist = todoLists.find(
+						(todoList) => todoList.id === todoListId,
+					);
 
-		editTodoList: () => {},
+					const updatedTodos = todolist.items.map((todoItem) => {
+						if (todoItem.id === updatedTodo.id) {
+							return updatedTodo;
+						}
+						return todoItem;
+					});
+
+					console.log(todolist);
+					todoListsActions.replace(todoListIndex, {
+						...todolist,
+						items: updatedTodos,
+					});
+				});
+		},
+
+		editTodoList: (newListName, todoListId) => {
+			const todoList = todoLists.find(
+				(todoList) => todoList.id === todoListId,
+			);
+			axios.patch(`http://198.21.222.157:8000/detail/${todoListId}/`, {
+				list_name: newListName,
+				id: todoListId,
+				items: todoList.items,
+			});
+			const todoListIndex = todoLists.findIndex(
+				(todoList) => todoList.id === todoListId,
+			);
+			todoListsActions.replace(todoListIndex, {
+				...todoList,
+				list_name: newListName,
+			});
+		},
 	};
-
-	// data:
-	// 	id: 26
-	// 	todo_list: 10
-	// 	todo_task: "Fix the api"
-	// 	__proto__: Object
 
 	return (
 		<TodosContext.Provider value={value}>

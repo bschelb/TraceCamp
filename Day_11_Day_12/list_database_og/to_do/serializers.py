@@ -49,24 +49,30 @@ class ToDoListSerializer(serializers.ModelSerializer):
         return todo_list
 
     def update(self, instance, validated_data):
-        instance.title = validated_data['list_name']
+        instance.list_name = validated_data['list_name']
         instance.save()
 
         # import pdb; pdb.set_trace()
-        task_id = [item for item in validated_data['items']]
-        for todo in instance.items.all():
-            if todo.id not in task_id:
-                todo.delete()
+        # tasks_contents = [item['todo_task'] for item in validated_data['items']]
+        # for todo in instance.items.all():
+        #     if todo.todo_task not in tasks_contents:
+        #         print("This is the todo: ", todo)
+        #         todo.delete()
 
         for item in validated_data['items']:
-            if 'id' in item:
-                todo = ToDoListItems.objects.get(pk=id).update(
-                    id=item['id'], text=item['todo_task'], todo_list=instance)
-                todo.save()
-            else:
-                todo = ToDoListItems(
-                    todo_task=item['todo_task'], todo_list=instance)
-                todo.save()
+            print("This is the item: ", item)
+            ToDoListItems.objects.get_or_create(
+                todo_task=item['todo_task'], todo_list=instance
+            )
+
+            # if 'id' in item:
+            #     todo = ToDoListItems.objects.get(pk=id).update(
+            #         id=item['id'], text=item['todo_task'], todo_list=instance)
+            #     todo.save()
+            # else:
+            #     todo = ToDoListItems(
+            #         todo_task=item['todo_task'], todo_list=instance)
+            #     todo.save()
         return instance
 
         # for item_data in items_data:

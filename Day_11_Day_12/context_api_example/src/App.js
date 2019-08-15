@@ -2,77 +2,83 @@ import React from 'react';
 import TodosContext from './components/TodosContext';
 
 const App = () => {
-  const [todo, setTodo] = React.useState('');
-  const [todoList, setTodoList] = React.useState('');
-  const [selectedList, setSelectedList] = React.useState();
+	const [ todo, setTodo ] = React.useState('');
+	const [ todoList, setTodoList ] = React.useState('');
+	const [ selectedList, setSelectedList ] = React.useState();
 
-  const {
-    state: todoLists,
-    addList,
-    removeList,
-    addListItem,
-    removeListItem,
-  } = React.useContext(TodosContext);
+	const {
+		state: todoLists,
+		addList,
+		removeList,
+		addListItem,
+		removeListItem,
+	} = React.useContext(TodosContext);
 
-  return (
-    <div>
-      <label htmlFor="todo-list">Todo List: </label>
-      <input
-        id="todo-list"
-        type="text"
-        value={todoList}
-        onChange={event => setTodoList(event.target.value)}
-      />
-      <button onClick={() => addList(todoList)}>Add List</button>
-      <br />
-      {selectedList}
+	return (
+		<div>
+			<label htmlFor="todo-list">Todo List: </label>
+			<input
+				id="todo-list"
+				type="text"
+				value={todoList}
+				onChange={(event) => setTodoList(event.target.value)}
+			/>
+			<button onClick={() => addList(todoList)}>Add List</button>
+			<br />
+			{selectedList}
 
-      {todoLists.length ? (
-        <div>
-          <label htmlFor="todo">Todo: </label>
-          <input
-            id="todo"
-            type="text"
-            value={todo}
-            onChange={event => setTodo(event.target.value)}
-          />
-          <select
-            onChange={event => {
-              setSelectedList(event.target.value);
-            }}
-            value={selectedList === todoList.id}
-          >
-            {todoLists.map(todoList => (
-              <option key={todoList.id} value={todoList.id}>
-                {todoList.name}
-              </option>
-            ))}
-          </select>
-          <button onClick={() => addListItem(Number(selectedList), todo)}>
-            Add Todo
-          </button>
-          <br />
-        </div>
-      ) : null}
-      {todoLists.map(todoList => (
-        <div key={todoList.id}>
-          <div key={todoList.id} onClick={() => removeList(todoList.id)}>
-            {todoList.name}
-          </div>
-          <div>
-            {todoList.todoItems.map(todoItem => (
-              <div
-                key={todoItem.id}
-                onClick={() => removeListItem(todoList.id, todoItem.id)}
-              >
-                {todoItem.text}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+			{todoLists.length ? (
+				<div>
+					<label htmlFor="todo">Todo: </label>
+					<input
+						id="todo"
+						type="text"
+						value={todo}
+						onChange={(event) => setTodo(event.target.value)}
+					/>
+					<select
+						onChange={(event) => {
+							setSelectedList(event.target.value);
+						}}
+						value={selectedList === todoList.id}
+					>
+						{todoLists.map((todoList) => (
+							<option key={todoList.id} value={todoList.id}>
+								{todoList.name}
+							</option>
+						))}
+					</select>
+					<button
+						onClick={() => addListItem(Number(selectedList), todo)}
+					>
+						Add Todo
+					</button>
+					<br />
+				</div>
+			) : null}
+			{todoLists.map((todoList) => (
+				<div key={todoList.id}>
+					<div
+						key={todoList.id}
+						onClick={() => removeList(todoList.id)}
+					>
+						{todoList.name}
+					</div>
+					<div>
+						{todoList.todoItems.map((todoItem) => (
+							<div
+								key={todoItem.id}
+								onClick={() =>
+									removeListItem(todoList.id, todoItem.id)}
+							>
+								{todoItem.text}
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default App;

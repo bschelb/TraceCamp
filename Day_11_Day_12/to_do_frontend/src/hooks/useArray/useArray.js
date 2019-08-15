@@ -67,6 +67,7 @@ export const useArray = (initialEntries) => {
 			setEntries((entries) => {
 				const clone = entries.concat();
 				clone.splice(start, deleteCount, ...items);
+				return clone;
 			});
 			return this;
 		};
