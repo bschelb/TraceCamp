@@ -55,7 +55,7 @@ const AddToDoList = () => {
 								onChange={(event) => {
 									setTodoListName(event.target.value);
 								}}
-								placeHolder="New todolist…"
+								placeholder="New todolist…"
 								margin="normal"
 							/>
 						</form>

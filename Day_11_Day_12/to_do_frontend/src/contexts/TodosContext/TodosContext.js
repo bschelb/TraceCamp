@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import useArray from 'hooks/useArray/useArray';
 
+const hostName = 'http://localhost:8000';
+
 const TodosContext = React.createContext();
 export default TodosContext;
 
@@ -10,7 +12,7 @@ export const TodosProvider = (props) => {
 	const [ todoLists, todoListsActions ] = useArray();
 	React.useEffect(
 		() => {
-			axios.get('http://198.21.222.157:8000/list/').then((response) => {
+			axios.get(`${hostName}/list/`).then((response) => {
 				todoListsActions.set(response.data);
 			});
 		},
@@ -20,11 +22,9 @@ export const TodosProvider = (props) => {
 	const [ todoItems, todoItemsActions ] = useArray();
 	React.useEffect(
 		() => {
-			axios
-				.get('http://198.21.222.157:8000/view_todos/')
-				.then((response) => {
-					todoItemsActions.set(response.data);
-				});
+			axios.get(`${hostName}/view_todos/`).then((response) => {
+				todoItemsActions.set(response.data);
+			});
 		},
 		[ todoItemsActions ],
 	);
@@ -35,7 +35,7 @@ export const TodosProvider = (props) => {
 
 		addTodoList: (todoListName) => {
 			axios
-				.post('http://198.21.222.157:8000/create/', {
+				.post(`${hostName}/create/`, {
 					list_name: todoListName,
 					items: [],
 					listuserid: 1,
@@ -48,7 +48,7 @@ export const TodosProvider = (props) => {
 
 		addTodo: (todoListId, todoTask) => {
 			axios
-				.post('http://198.21.222.157:8000/single_todo/', {
+				.post(`${hostName}/single_todo/`, {
 					todo_task: todoTask,
 					todo_list: todoListId,
 				})
@@ -72,20 +72,17 @@ export const TodosProvider = (props) => {
 		},
 
 		removeTodoList: (todoListId) => {
-			axios.get(`http://198.21.222.157:8000/delete/${todoListId}/`, {
+			axios.get(`${hostName}/delete/${todoListId}/`, {
 				id: todoListId,
 			});
 			todoListsActions.filter((todoList) => todoList.id !== todoListId);
 		},
 
 		removeTodo: (todoTaskId, todoListId) => {
-			axios.delete(
-				`http://198.21.222.157:8000/single_todo/${todoTaskId}/`,
-				{
-					id: todoTaskId,
-					todo_list: todoListId,
-				},
-			);
+			axios.delete(`${hostName}/single_todo/${todoTaskId}/`, {
+				id: todoTaskId,
+				todo_list: todoListId,
+			});
 			const todoIndex = todoItems.findIndex(
 				(todoItems) => todoItems.id === todoTaskId,
 			);
@@ -109,7 +106,7 @@ export const TodosProvider = (props) => {
 
 		editTodo: (updatedContent, todoTaskId, todoListId) => {
 			axios
-				.put(`http://198.21.222.157:8000/single_todo/${todoTaskId}/`, {
+				.put(`${hostName}/single_todo/${todoTaskId}/`, {
 					todo_task: updatedContent,
 					id: todoTaskId,
 					todo_list: todoListId,
@@ -125,7 +122,6 @@ export const TodosProvider = (props) => {
 					const todoListIndex = todoLists.findIndex(
 						(todoList) => todoList.id === todoListId,
 					);
-					console.log(todoListIndex);
 					const todolist = todoLists.find(
 						(todoList) => todoList.id === todoListId,
 					);
@@ -136,8 +132,6 @@ export const TodosProvider = (props) => {
 						}
 						return todoItem;
 					});
-
-					console.log(todolist);
 					todoListsActions.replace(todoListIndex, {
 						...todolist,
 						items: updatedTodos,
@@ -149,7 +143,7 @@ export const TodosProvider = (props) => {
 			const todoList = todoLists.find(
 				(todoList) => todoList.id === todoListId,
 			);
-			axios.patch(`http://198.21.222.157:8000/detail/${todoListId}/`, {
+			axios.patch(`${hostName}/detail/${todoListId}/`, {
 				list_name: newListName,
 				id: todoListId,
 				items: todoList.items,

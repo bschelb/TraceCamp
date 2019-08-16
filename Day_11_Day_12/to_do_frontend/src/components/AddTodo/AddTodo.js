@@ -30,7 +30,7 @@ const AddTodo = ({ todoList, color }) => {
 					onChange={(event) => {
 						setTodoName(event.target.value);
 					}}
-					placeHolder={todoList.list_name}
+					placeholder={todoList.list_name}
 					margin="normal"
 					label="New todo…"
 				/>

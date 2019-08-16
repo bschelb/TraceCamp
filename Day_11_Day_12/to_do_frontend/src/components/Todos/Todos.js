@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,7 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
+// import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 
 import TodosContext from 'contexts/TodosContext/TodosContext';
@@ -26,19 +26,18 @@ const headingStyle = {
 const Todos = ({ todoList, index }) => {
 	const {
 		removeTodoList,
-		removeTodo,
+		// removeTodo,
 		editTodoList,
-		editTodo,
+		// editTodo,
 	} = React.useContext(TodosContext);
 	const color = colors[index % colors.length];
 
 	const [ todoName, setTodoName ] = React.useState(todoList.list_name);
-	const [ todoTask, setTodoTask ] = React.useState(todoList.items.todo_task);
+	// const [ todoTask, setTodoTask ] = React.useState(todoList.items.todo_task);
 
 	return (
 		<Grid key={todoList.id} item xs={12} sm={6}>
 			<Card>
-				{/* <CardActionArea> */}
 				<div
 					style={{
 						height: '140px',
@@ -47,9 +46,6 @@ const Todos = ({ todoList, index }) => {
 					}}
 				>
 					<div style={headingStyle}>
-						{/* <Typography gutterBottom variant="h5" component="h2">
-							{todoList.list_name}
-						</Typography> */}
 						<form
 							noValidate
 							autoComplete="off"
@@ -62,17 +58,18 @@ const Todos = ({ todoList, index }) => {
 								id="standard-name"
 								label={
 									todoList.list_name === todoName ? (
-										'Todolist'
+										'Todo List'
 									) : (
-										todoList.list_name
+										'Press Enter To Save'
 									)
 								}
 								value={todoName}
 								onChange={(event) => {
 									setTodoName(event.target.value);
 								}}
-								placeHolder={todoList.list_name}
+								placeholder={todoList.list_name}
 								margin="normal"
+								fullWidth
 							/>
 						</form>
 					</div>
@@ -81,6 +78,7 @@ const Todos = ({ todoList, index }) => {
 					{todoList.items.length !== 0 ? (
 						todoList.items.map((todo) => (
 							<Todo
+								key={todo.id}
 								todo={todo}
 								color={color}
 								todoListId={todoList.id}
@@ -97,7 +95,6 @@ const Todos = ({ todoList, index }) => {
 					)}
 					<AddTodo todoList={todoList} color={color} />
 				</CardContent>
-				{/* </CardActionArea> */}
 				<CardActions>
 					<Button
 						size="small"
@@ -115,56 +112,3 @@ const Todos = ({ todoList, index }) => {
 };
 
 export default Todos;
-
-// const old = () => {
-// 	return (
-// 		<Typography
-// 			key={todo.id}
-// 			variant="body2"
-// 			color="textSecondary"
-// 			component="p"
-// 		>
-// 			<form
-// 				noValidate
-// 				autoComplete="off"
-// 				onSubmit={(event) => {
-// 					event.preventDefault();
-// 					editTodo(
-// 						todoTask,
-// 						todo.id,
-// 						todo.todo_list,
-// 					);
-// 				}}
-// 			>
-// 				<TextField
-// 					id="standard-name"
-// 					label={
-// 						todo.todo_task === todoTask ? (
-// 							'TodoTask'
-// 						) : (
-// 								todo.todo_task
-// 							)
-// 					}
-// 					value={todoTask}
-// 					onChange={(event) => {
-// 						setTodoTask(event.target.value);
-// 					}}
-// 					placeholder={todo.todo_task}
-// 					margin="normal"
-// 				/>
-// 				<Chip
-// 					size="small"
-// 					label="✖"
-// 					onClick={() =>
-// 						removeTodo(todo.id, todoList.id)}
-// 					style={{
-// 						color: 'white',
-// 						backgroundColor: color,
-// 						margin: '10px',
-// 						marginTop: '33px',
-// 					}}
-// 				/>
-// 			</form>
-// 		</Typography>
-// 	)
-// }
