@@ -49,21 +49,3 @@ const AddTodo = ({ todoList, color }) => {
 };
 
 export default AddTodo;
-
-// const old = () => {
-// 	return (
-// 		<React.Fragment>
-// 			<div>Hello AddTodo</div>
-// 			<form onSubmit={handleSubmit}>
-// 				<input
-// 					type="text"
-// 					placeholder="Add todo…"
-// 					value={todoName}
-// 					onChange={(event) => setTodoName(event.target.value)}
-// 				/>
-// 				<button type="submit">AddTodo</button>
-// 				{todoName}
-// 			</form>
-// 		</React.Fragment>
-// 	)
-// }

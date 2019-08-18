@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -20,9 +19,6 @@ const AddToDoList = () => {
 	const { addTodoList, todoLists } = React.useContext(TodosContext);
 
 	const [ todoListName, setTodoListName ] = React.useState('');
-	// const onSubmit = (event) => {
-	// 	event.preventDefault();
-	// };
 
 	const color =
 		colors[(todoLists ? todoLists.length + 1 : 1) % colors.length];
@@ -30,7 +26,6 @@ const AddToDoList = () => {
 	return (
 		<React.Fragment>
 			<Card>
-				{/* <CardActionArea> */}
 				<div
 					style={{
 						height: '140px',
@@ -66,11 +61,8 @@ const AddToDoList = () => {
 						variant="body2"
 						color="textSecondary"
 						component="p"
-					>
-						{/* Congrats! No tasks */}
-					</Typography>
+					/>
 				</CardContent>
-				{/* </CardActionArea> */}
 				<CardActions>
 					<Button
 						size="small"
@@ -92,21 +84,3 @@ const AddToDoList = () => {
 };
 
 export default AddToDoList;
-
-// const old = () => {
-// 	return (
-// 		<React.Fragment>
-// 			<div>Hello from AddToDoList</div>
-// 			<form onSubmit={onSubmit}>
-// 				<input
-// 					type="text"
-// 					placeholder="Add todo list…"
-// 					value={todoListName}
-// 					onChange={(event) => setTodoListName(event.target.value)}
-// 				/>
-// 				<button type="submit">AddTodoList</button>
-// 				{todoListName}
-// 			</form>
-// 		</React.Fragment>
-// 	);
-// };
